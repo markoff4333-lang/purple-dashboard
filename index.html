@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purple Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="leaf">🍁</span>
+      </div>
+
+      <div class="sidebar-controls">
+        <button id="btnLogin">Войти</button>
+        <select id="userSelect"></select>
+        <button id="btnCheckin" disabled>Отметиться</button>
+      </div>
+    </aside>
+
+    <!-- ПРАВАЯ ЧАСТЬ -->
+    <main class="content">
+      <!-- Верхнее горизонтальное меню -->
+      <header class="top-nav">
+        <button class="top-nav-item top-nav-item--active">СТРАНИЦА</button>
+        <button class="top-nav-item">РАСПИСАНИЕ</button>
+        <button class="top-nav-item">ГРАФИК ОБЕДОВ</button>
+        <button class="top-nav-item">ПРИХОД НА РАБОТУ</button>
+        <button class="top-nav-item">КАЛЕНДАРЬ ОТПУСКОВ</button>
+        <button class="top-nav-item">МОИ ЦЕЛИ</button>
+        <button class="top-nav-item">МОИ KPI</button>
+      </header>
+
+      <!-- Основной блок приветствия -->
+      <section class="welcome-block">
+        <h1 class="welcome-title" id="welcome">Добро пожаловать!</h1>
+        <div class="divider"></div>
+
+        <div class="info">
+          <p>
+            Сегодня вы пришли на работу в
+            <span class="info-bold" id="arrivalTime">07:12</span>
+          </p>
+          <p>
+            Вы записались на обед в:
+            <span class="info-bold">0</span>
+          </p>
+          <p>
+            Количество дней отпуска:
+            <span class="info-bold">15</span>
+          </p>
+          <p>Дежурный тимлид: Сейчас на обеде:</p>
+          <p class="info-bold">Лях Вячеслав Михайлович</p>
+
+          <h2 class="sub-title">Управление перерывами</h2>
+          <p>Сейчас на перерыве: -</p>
+          <p>Сейчас на обеде:</p>
+
+          <p class="good-day">Хорошего дня!</p>
+
+          <!-- сюда app.js сможет писать статусы -->
+          <p id="status"></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
