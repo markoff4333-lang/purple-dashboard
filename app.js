@@ -106,4 +106,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     status.textContent = `${currentUser.short} отметился в ${timeStr}.`;
   });
+
+  // --- ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ---
+
+  const tabHome = document.getElementById("tabHome");
+  const tabSchedule = document.getElementById("tabSchedule");
+
+  const homeBlock = document.getElementById("homeBlock");
+  const scheduleBlock = document.getElementById("scheduleBlock");
+
+  function resetTabs() {
+    document
+      .querySelectorAll(".top-nav-item")
+      .forEach((btn) => btn.classList.remove("top-nav-item--active"));
+  }
+
+  if (tabHome && tabSchedule && homeBlock && scheduleBlock) {
+    // вкладка СТРАНИЦА
+    tabHome.addEventListener("click", () => {
+      resetTabs();
+      tabHome.classList.add("top-nav-item--active");
+      homeBlock.style.display = "block";
+      scheduleBlock.style.display = "none";
+    });
+
+    // вкладка РАСПИСАНИЕ
+    tabSchedule.addEventListener("click", () => {
+      resetTabs();
+      tabSchedule.classList.add("top-nav-item--active");
+      homeBlock.style.display = "none";
+      scheduleBlock.style.display = "block";
+    });
+  }
 });

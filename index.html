@@ -25,8 +25,8 @@
     <main class="content">
       <!-- Верхнее горизонтальное меню -->
       <header class="top-nav">
-        <button class="top-nav-item top-nav-item--active">СТРАНИЦА</button>
-        <button class="top-nav-item">РАСПИСАНИЕ</button>
+        <button class="top-nav-item top-nav-item--active" id="tabHome">СТРАНИЦА</button>
+        <button class="top-nav-item" id="tabSchedule">РАСПИСАНИЕ</button>
         <button class="top-nav-item">ГРАФИК ОБЕДОВ</button>
         <button class="top-nav-item">ПРИХОД НА РАБОТУ</button>
         <button class="top-nav-item">КАЛЕНДАРЬ ОТПУСКОВ</button>
@@ -34,8 +34,8 @@
         <button class="top-nav-item">МОИ KPI</button>
       </header>
 
-      <!-- Основной блок приветствия -->
-      <section class="welcome-block">
+      <!-- Основной блок приветствия (вкладка "СТРАНИЦА") -->
+      <section class="welcome-block" id="homeBlock">
         <h1 class="welcome-title" id="welcome">Добро пожаловать!</h1>
         <div class="divider"></div>
 
@@ -63,6 +63,22 @@
 
           <!-- сюда app.js сможет писать статусы -->
           <p id="status"></p>
+        </div>
+      </section>
+
+      <!-- Блок "РАСПИСАНИЕ" (вкладка РАСФИСАНИЕ) -->
+      <section class="schedule-block" id="scheduleBlock" style="display: none;">
+        <h1 class="welcome-title">Расписание дежурных</h1>
+        <div class="divider"></div>
+
+        <div class="info">
+          <p><strong>Понедельник:</strong> Иванов Иван Иванович</p>
+          <p><strong>Вторник:</strong> Петров Пётр Петрович</p>
+          <p><strong>Среда:</strong> Сидорова Мария Александровна</p>
+          <p><strong>Четверг:</strong> Кузнецов Алексей Олегович</p>
+          <p><strong>Пятница:</strong> Иванов Иван Иванович</p>
+          <p><strong>Суббота:</strong> дежурный не назначен</p>
+          <p><strong>Воскресенье:</strong> дежурный не назначен</p>
         </div>
       </section>
     </main>
