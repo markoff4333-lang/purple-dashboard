@@ -5,19 +5,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const welcome = document.getElementById("welcome");
   const status = document.getElementById("status");
   const arrivalSpan = document.getElementById("arrivalTime");
+  const dutyLeadName = document.getElementById("dutyLeadName");
 
   // Ключи для localStorage
   const STORAGE_USER_ID = "pd_current_user_id";
   const STORAGE_ARRIVAL = "pd_arrival_time";
 
-  // Наши тренировочные пользователи
+  // Тестовые пользователи
   const users = [
-    { id: 1, short: "Серёга Л.", full: "Лях Вячеслав Михайлович" },
-    { id: 2, short: "Иван И.", full: "Иван Иванович" },
-    { id: 3, short: "Мария П.", full: "Мария Петровна" },
+    { id: 1, short: "Иванов И.И.", full: "Иванов Иван Иванович" },
+    { id: 2, short: "Петров П.П.", full: "Петров Пётр Петрович" },
+    { id: 3, short: "Сидорова М.А.", full: "Сидорова Мария Александровна" },
+    { id: 4, short: "Кузнецов А.О.", full: "Кузнецов Алексей Олегович" },
   ];
 
-  // Заполняем select
+  // 📅 Расписание дежурных (тестовые ФИО)
+  // 0 = Вс, 1 = Пн ... 6 = Сб
+  const dutySchedule = {
+    1: "Иванов Иван Иванович",         // Пн
+    2: "Петров Пётр Петрович",         // Вт
+    3: "Сидорова Мария Александровна", // Ср
+    4: "Кузнецов Алексей Олегович",    // Чт
+    5: "Иванов Иван Иванович",         // Пт
+    // Сб и Вс – выходные
+  };
+
+  // 👉 Определяем дежурного по текущему дню недели
+  if (dutyLeadName) {
+    const day = new Date().getDay();
+    dutyLeadName.textContent =
+      dutySchedule[day] || "Дежурный не назначен (выходной день)";
+  }
+
+  // Заполняем выпадающий список пользователей
   users.forEach((u) => {
     const opt = document.createElement("option");
     opt.value = u.id;
@@ -27,49 +47,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentUser = null;
 
-  // --- ВОССТАНОВЛЕНИЕ ДАННЫХ ИЗ localStorage ---
+  // --- ВОССТАНОВЛЕНИЕ userId ---
   const savedUserId = Number(localStorage.getItem(STORAGE_USER_ID));
-  const savedArrival = localStorage.getItem(STORAGE_ARRIVAL);
-
   if (savedUserId) {
     const u = users.find((x) => x.id === savedUserId);
     if (u) {
       currentUser = u;
       userSelect.value = String(u.id);
       welcome.textContent = `Добро пожаловать, ${u.short}!`;
-      btnCheckin.disabled = false; // раз уже был вход, позволим снова отмечаться
+      btnCheckin.disabled = false;
     }
   }
 
+  // --- ВОССТАНОВЛЕНИЕ времени прихода ---
+  const savedArrival = localStorage.getItem(STORAGE_ARRIVAL);
   if (savedArrival) {
     arrivalSpan.textContent = savedArrival;
     if (currentUser) {
-      status.textContent = `${currentUser.short} пришёл в ${savedArrival} (данные сохранены).`;
-    } else {
-      status.textContent = `Приход в ${savedArrival} (данные сохранены).`;
+      status.textContent = `${currentUser.short} пришёл в ${savedArrival} (сохранено).`;
     }
   }
 
-  // --- Обработчик "Войти" ---
+  // --- Кнопка "Войти" ---
   btnLogin.addEventListener("click", () => {
     const userId = Number(userSelect.value);
     currentUser = users.find((u) => u.id === userId);
 
     if (!currentUser) {
-      status.textContent = "Сначала выберите пользователя.";
+      status.textContent = "Выберите пользователя.";
       return;
     }
 
     welcome.textContent = `Добро пожаловать, ${currentUser.short}!`;
     btnCheckin.disabled = false;
 
-    // сохраняем выбранного пользователя
     localStorage.setItem(STORAGE_USER_ID, String(currentUser.id));
 
     status.textContent = `${currentUser.short} вошёл в систему.`;
   });
 
-  // --- Обработчик "Отметиться" ---
+  // --- Кнопка "Отметиться" ---
   btnCheckin.addEventListener("click", () => {
     if (!currentUser) {
       status.textContent = "Сначала войдите.";
@@ -83,12 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
       second: "2-digit",
     });
 
-    // показываем время прихода
     arrivalSpan.textContent = timeStr;
 
-    // сохраняем в localStorage
     localStorage.setItem(STORAGE_ARRIVAL, timeStr);
-    localStorage.setItem(STORAGE_USER_ID, String(currentUser.id));
 
     status.textContent = `${currentUser.short} отметился в ${timeStr}.`;
   });
